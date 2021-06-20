@@ -1,15 +1,20 @@
 <template>
   <div>
-    <div class="columns is-gapless">
-      <div class="column" style="margin-right: 5px">
+    <div class="columns is-gapless" style="margin: 5px">
+      <div class="column">
         <form class="box">
           <div class="field">
-            <img class="rounded" :src="creditA.img" width="30px" />
+            <img
+              class="rounded"
+              :src="'./assets/' + creditA + '.png'"
+              width="30px"
+            />
             <label class="label">Valor</label>
             <div class="control">
               <input
                 class="input"
-                v-model="creditA.value"
+                v-model="valueA"
+                v-on:keydown="getCurrencyValue"
                 type="number"
                 value="0"
               />
@@ -30,15 +35,14 @@
       <div class="column">
         <form class="box">
           <div class="field">
-            <img class="rounded" :src="creditB.img" width="30px" />
+            <img
+              class="rounded"
+              :src="'./assets/' + creditB + '.png'"
+              width="30px"
+            />
             <label class="label">Valor</label>
             <div class="control">
-              <input
-                class="input"
-                v-model="creditB.value"
-                type="number"
-                value="0"
-              />
+              <input class="input" v-model="valueB" type="number" value="0" />
             </div>
           </div>
         </form>
@@ -51,45 +55,46 @@
   "https://free.currconv.com/api/v7/convert?apiKey=115fb233fc92a88e2935&q=USD_EUR&compact=115fb233fc92a88e2935";
 */
 export default {
-    props: {
-        creditA: {
-            type: String,
-            default: "BRL"
-        },
-        creditB: {
-            type: String,
-            default: "BRL"
-        }
-    },
-  data: () => ({
+  props: {
     creditA: {
-      value: 0,
-      name: "Brasil (R$)",
-      img: "assets/brl.png",
+      type: String,
+      default: "BRL",
     },
-
     creditB: {
-      value: 0,
-      name: "Dólar ($)",
-      img: "assets/eua.png",
+      type: String,
+      default: "USD",
     },
+  },
+
+  data: () => ({
+    valueA: 0,
+    valueB: 0,
   }),
+
   methods: {
     getCurrencyValue() {
-      this.$http
-        .get(
-          "https://free.currconv.com/api/v7/convert?apiKey=115fb233fc92a88e2935&q=USD_EUR&compact=115fb233fc92a88e2935"
-        )
-        .then((response) => {
-          console.log(response.data);
-        });
-    },
-    switchCredits() {
-      const saved = { ...this.creditB };
+      const currency = `${this.creditA}_${this.creditB}`;
+      let url = `https://free.currconv.com/api/v7/convert?apiKey=115fb233fc92a88e2935&q=${currency}&compact=115fb233fc92a88e2935`;
 
-      this.creditB = this.creditA;
-      this.creditA = saved;
-      this.getCurrencyValue();
+      this.$http.get(url).then((response) => {
+        const cotation = response.data.results[currency].val;
+        this.valueB = (cotation * this.valueA).toFixed(2);
+
+        this.$emit("changeValue", {
+          newValue: `Convertendo de ${this.creditA} para ${this.creditB} `,
+        });
+      });
+    },
+
+    switchCredits() {
+      const saved = this.valueA;
+
+      this.valueA = this.valueB;
+      this.valueB = saved;
+
+      this.$emit("toggleCurrency");
+
+
     },
   },
 };

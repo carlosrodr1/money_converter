@@ -2,7 +2,7 @@
   <section :class="'hero ' + typeAlert">
     <div class="hero-body">
       <p class="title">{{ title }}</p>
-      <p class="subtitle">Convertendo de {{ converter }}</p>
+      <p class="subtitle">{{subTitle}}</p>
     </div>
   </section>
 </template>
@@ -14,9 +14,9 @@ export default {
       tpye: String,
       required: true,
     },
-    converter: {
+    subTitle: {
       type: String,
-      default: "$ para R$",
+      default: "Conversor de moedas",
     },
     typeAlert: {
       type: String,
