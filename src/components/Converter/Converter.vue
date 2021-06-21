@@ -1,5 +1,17 @@
 <template>
   <div>
+    <section>
+      <b-field>
+        <b-select
+          @input="changeCurrency"
+          placeholder="Converter de outras moedas"
+          icon="currency-usd"
+        >
+          <option value="EUR">Euro</option>
+          <option value="USD">Dólar Americano</option>
+        </b-select>
+      </b-field>
+    </section>
     <div class="columns is-gapless" style="margin: 5px">
       <div class="column">
         <form class="box">
@@ -16,7 +28,6 @@
                 v-model="valueA"
                 v-on:keydown="getCurrencyValue"
                 type="number"
-                value="0"
               />
             </div>
           </div>
@@ -42,7 +53,7 @@
             />
             <label class="label">Valor</label>
             <div class="control">
-              <input class="input" v-model="valueB" type="number" value="0" />
+              <input class="input" v-model="valueB" type="number" />
             </div>
           </div>
         </form>
@@ -86,6 +97,10 @@ export default {
       });
     },
 
+    changeCurrency(e) {
+      console.log('f');
+       this.$emit("changeCurrency", e);
+    },
     switchCredits() {
       const saved = this.valueA;
 
@@ -93,8 +108,6 @@ export default {
       this.valueB = saved;
 
       this.$emit("toggleCurrency");
-
-
     },
   },
 };
