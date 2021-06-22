@@ -4,6 +4,10 @@
   </div>
 </template>
 
+<style scoped>
+  html {background: #167df0}
+</style>
+
 <script>
 import Main from "./components/Main.vue";
 

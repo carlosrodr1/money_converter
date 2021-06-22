@@ -1,5 +1,5 @@
 <template>
-  <section :class="'hero ' + typeAlert">
+  <section :class="'hero custom ' + typeAlert">
     <div class="hero-body">
       <p class="title">{{ title }}</p>
       <p class="subtitle">{{subTitle}}</p>

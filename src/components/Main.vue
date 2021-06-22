@@ -1,15 +1,17 @@
 <template>
-  <div id="app" style="background: #eee">
+  <div id="app" style="background: #167df0">
     <hero
       typeAlert="is-info"
-      :title="receivedValue != '' ? receivedValue : `Convertendo de ${this.valueA} para ${this.valueB} `"
+      :title="
+        receivedValue != ''
+          ? receivedValue
+          : `Convertendo de ${this.valueA} para ${this.valueB} `
+      "
     />
 
-    <br/>
+    <br />
 
     <div class="container">
-      
-
       <converter
         :creditA="valueA"
         :creditB="valueB"
@@ -18,9 +20,6 @@
         @toggleCurrency="toggleCurrency"
       />
 
-      <hr/>
-
-      
     </div>
   </div>
 </template>
@@ -42,22 +41,22 @@ export default {
   data: () => ({
     receivedValue: "",
     valueA: "USD",
-    valueB: "BRL"
+    valueB: "BRL",
   }),
   methods: {
     updateValue(data) {
       this.receivedValue = data.newValue;
     },
-    changeCurrency(data){
-      if(this.valueB == data) 
-      {
+
+    changeCurrency(data) {
+      if (this.valueB == data) {
         this.toggleCurrency();
         return;
       }
 
       this.valueA = data;
-
     },
+
     toggleCurrency() {
       let saved = this.valueA;
 
