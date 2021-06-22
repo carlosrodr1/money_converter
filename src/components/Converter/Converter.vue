@@ -84,22 +84,33 @@ export default {
 
   methods: {
     getCurrencyValue() {
-      const currency = `${this.creditA}_${this.creditB}`;
+      const creditA = this.creditA;
+      const creditB = this.creditB;
+      let currency = `${this.creditA}_${this.creditB}`;
       let url = `https://free.currconv.com/api/v7/convert?apiKey=115fb233fc92a88e2935&q=${currency}&compact=115fb233fc92a88e2935`;
 
       this.$http.get(url).then((response) => {
-        const cotation = response.data.results[currency].val;
+        let cotation = response.data.results[currency].val;
+        let symbols = [];
+        symbols["USD"] = "$";
+        symbols["BRL"] = "R$";
+        symbols["EUR"] = "€";
+
+        console.log(symbols);
+
         this.valueB = (cotation * this.valueA).toFixed(2);
 
         this.$emit("changeValue", {
-          newValue: `Convertendo de ${this.creditA} para ${this.creditB} `,
+          newValue: `${symbols[creditA]}1,00 hoje equivale ${
+            symbols[creditB]
+          }${cotation.toFixed(2)} `,
         });
       });
     },
 
     changeCurrency(e) {
-      console.log('f');
-       this.$emit("changeCurrency", e);
+      console.log("f");
+      this.$emit("changeCurrency", e);
     },
     switchCredits() {
       const saved = this.valueA;
