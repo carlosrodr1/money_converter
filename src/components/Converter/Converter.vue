@@ -27,6 +27,7 @@
                 class="input"
                 v-model="valueA"
                 v-on:keydown="getCurrencyValue"
+                v-on:change="getCurrencyValue"
                 type="number"
               />
             </div>
@@ -35,7 +36,13 @@
       </div>
       <svg
         v-on:click="switchCredits"
-        style="width: 44px; height: 44px; margin-top: 60px; cursor: pointer"
+        style="
+          color: white;
+          width: 44px;
+          height: 44px;
+          margin-top: 60px;
+          cursor: pointer;
+        "
         viewBox="0 0 24 24"
       >
         <path
@@ -53,7 +60,7 @@
             />
             <label class="label">Valor</label>
             <div class="control">
-              <input class="input" v-model="valueB" type="number" />
+              <input class="input" v-model="valueB" type="number" disabled/>
             </div>
           </div>
         </form>
@@ -61,10 +68,21 @@
     </div>
   </div>
 </template>
+<style scoped>
+.box {
+  border-radius: 20px;
+  margin-right: 5px;
+}
+.input {
+  border: none;
+  height: 75px;
+  font-size: 24px
+
+}
+
+</style>
 <script>
-/*let url =
-  "https://free.currconv.com/api/v7/convert?apiKey=115fb233fc92a88e2935&q=USD_EUR&compact=115fb233fc92a88e2935";
-*/
+
 export default {
   props: {
     creditA: {
@@ -78,8 +96,8 @@ export default {
   },
 
   data: () => ({
-    valueA: 0,
-    valueB: 0,
+    valueA: "0.00",
+    valueB: "0.00",
   }),
 
   methods: {
@@ -96,8 +114,6 @@ export default {
         symbols["BRL"] = "R$";
         symbols["EUR"] = "€";
 
-        console.log(symbols);
-
         this.valueB = (cotation * this.valueA).toFixed(2);
 
         this.$emit("changeValue", {
@@ -109,7 +125,6 @@ export default {
     },
 
     changeCurrency(e) {
-      console.log("f");
       this.$emit("changeCurrency", e);
     },
     switchCredits() {
@@ -119,6 +134,7 @@ export default {
       this.valueB = saved;
 
       this.$emit("toggleCurrency");
+      //this.getCurrencyValue();
     },
   },
 };

@@ -8,10 +8,7 @@
           : `Convertendo de ${this.valueA} para ${this.valueB} `
       "
 
-     :subTitle="receivedValue != ''
-          ? receivedValue
-          : `Convertendo de ${this.valueA} para ${this.valueB} `
-      "
+     :subTitle="`Convertendo de ${this.valueA} para ${this.valueB}`"
     />
 
     <br />
