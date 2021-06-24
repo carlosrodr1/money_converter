@@ -30,6 +30,7 @@
 .rounded {
   height: 30px;
   border-radius: 35px;
+  margin: 5px
 }
 </style>
 

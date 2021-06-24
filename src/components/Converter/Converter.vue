@@ -1,14 +1,14 @@
 <template>
   <div>
     <section>
-      <b-field>
+      <b-field> 
         <b-select
           @input="changeCurrency"
           placeholder="Converter de outras moedas"
           icon="currency-usd"
         >
           <option value="EUR">Euro</option>
-          <option value="USD">Dólar Americano</option>
+          <option value="CAD">Dólar Canadense</option>
         </b-select>
       </b-field>
     </section>
@@ -20,7 +20,7 @@
               class="rounded"
               :src="'./assets/' + creditA + '.png'"
               width="30px"
-            />
+            /> 
             <label class="label">Valor</label>
             <div class="control">
               <input
@@ -57,7 +57,7 @@
               class="rounded"
               :src="'./assets/' + creditB + '.png'"
               width="30px"
-            />
+            /> 
             <label class="label">Valor</label>
             <div class="control">
               <input class="input" v-model="valueB" type="number" disabled/>
